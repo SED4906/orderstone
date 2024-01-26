@@ -2,6 +2,7 @@ use std::error::Error;
 pub mod geometry;
 pub mod shader;
 pub mod buffers;
+pub mod texture;
 
 fn find_sdl_gl_driver() -> Option<u32> {
     for (index, item) in sdl2::render::drivers().enumerate() {

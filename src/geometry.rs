@@ -1,8 +1,10 @@
 use std::{ffi::c_void, mem::size_of, ptr::null};
-use crate::{buffers::Buffers, shader::Shader};
+use crate::{buffers::Buffers, shader::Shader, texture::Texture};
 
+#[repr(C)]
 pub struct Vertex {
-    pub pos: [f32;3]
+    pub pos: [f32;3],
+    pub tex_coords: [f32;2],
 }
 
 pub type Index = u32;
@@ -12,10 +14,11 @@ pub struct Mesh {
     pub indices: Vec<Index>,
     pub buffers: Buffers,
     pub shader: Shader,
+    pub texture: Texture,
 }
 
 impl Mesh {
-    pub fn new(vertices: Vec<Vertex>, indices: Vec<Index>, shader: Shader) -> Self {
+    pub fn new(vertices: Vec<Vertex>, indices: Vec<Index>, shader: Shader, texture: Texture) -> Self {
         let buffers = Buffers::new();
         buffers.bind_vao();
         buffers.bind_vbo();
@@ -37,12 +40,13 @@ impl Mesh {
             }
         }
         Self {
-            vertices, indices, shader, buffers
+            vertices, indices, shader, buffers, texture
         }
     }
 
     pub fn draw(&self) {
         self.shader.use_shader();
+        self.texture.bind();
         self.buffers.bind_vao();
         unsafe {
             gl::DrawElements(gl::TRIANGLES, self.indices.len() as i32, gl::UNSIGNED_INT, null());

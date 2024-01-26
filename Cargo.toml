@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 gl = "0.14"
 sdl2 = {version = "0.36", features = ["bundled"]}
+img-rs = "2"
 
 [[example]]
 name = "hello-triangle"

@@ -30,10 +30,10 @@ impl Mesh {
             unsafe {
                 gl::VertexAttribPointer(index as u32, vertex_attribute.size as i32, vertex_attribute.attribute_type, if vertex_attribute.normalized {gl::TRUE} else {gl::FALSE}, size_of::<Vertex>() as i32, attribute_offset as *const c_void);
                 attribute_offset += vertex_attribute.size * match vertex_attribute.attribute_type {
-                    gl::UNSIGNED_BYTE | gl::BYTE => 1,
-                    gl::UNSIGNED_SHORT | gl::SHORT => 2,
-                    gl::FLOAT | gl::UNSIGNED_INT | gl::INT => 4,
-                    gl::DOUBLE => 8,
+                    gl::UNSIGNED_BYTE | gl::BYTE => size_of::<u8>(),
+                    gl::UNSIGNED_SHORT | gl::SHORT => size_of::<u16>(),
+                    gl::FLOAT | gl::UNSIGNED_INT | gl::INT => size_of::<u32>(),
+                    gl::DOUBLE => size_of::<u64>(),
                     _ => panic!("attribute type {} not recognized",vertex_attribute.attribute_type),
                 };
                 gl::EnableVertexAttribArray(index as u32);

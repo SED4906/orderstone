@@ -1,4 +1,3 @@
-use img_rs::Image;
 use orderstone::{clear, geometry::{Mesh, Vertex}, shader::{Shader, VertexAttribute}, texture::Texture, Application};
 use sdl2::{event::Event, keyboard::Keycode};
 
@@ -7,10 +6,14 @@ fn main() {
         let vertices = vec![
             Vertex{pos: [-0.5,-0.5,0.0], tex_coords: [0.0,0.0]},
             Vertex{pos: [0.5,-0.5,0.0], tex_coords: [1.0,0.0]},
-            Vertex{pos: [0.0,0.5,0.0], tex_coords: [0.5,1.0]},
+            Vertex{pos: [-0.5,0.5,0.0], tex_coords: [0.0,1.0]},
+            Vertex{pos: [0.5,0.5,0.0], tex_coords: [1.0,1.0]},
         ];
 
-        let indices = vec![ 0, 1, 2 ];
+        let indices = vec![
+            0, 1, 2,
+            1, 2, 3,
+        ];
 
         let shader = Shader::new(include_str!("vertex.glsl"), include_str!("fragment.glsl"), vec![
             VertexAttribute {attribute_type: gl::FLOAT, normalized: false, size: 3},

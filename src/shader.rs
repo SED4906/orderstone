@@ -16,11 +16,11 @@ impl Shader {
         unsafe {
             let vertex = gl::CreateShader(gl::VERTEX_SHADER);
             let fragment = gl::CreateShader(gl::FRAGMENT_SHADER);
+            let program = gl::CreateProgram();
             gl::ShaderSource(vertex, 1, &vertex_source.as_bytes().into_iter().map(|b| *b as i8).collect::<Vec<i8>>().as_ptr(), null());
             gl::CompileShader(vertex);
             gl::ShaderSource(fragment, 1, &fragment_source.as_bytes().into_iter().map(|b| *b as i8).collect::<Vec<i8>>().as_ptr(), null());
             gl::CompileShader(fragment);
-            let program = gl::CreateProgram();
             gl::AttachShader(program, vertex);
             gl::AttachShader(program, fragment);
             gl::LinkProgram(program);

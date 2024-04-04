@@ -45,8 +45,8 @@ impl Mesh {
     }
 
     pub fn draw(&self) {
-        self.shader.use_shader();
         self.texture.bind();
+        self.shader.use_shader();
         self.buffers.bind_vao();
         unsafe {
             gl::DrawElements(gl::TRIANGLES, self.indices.len() as i32, gl::UNSIGNED_INT, null());
